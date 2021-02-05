@@ -1,0 +1,15 @@
+[
+  {
+      "model": "levelupapi.game",
+      "pk": 1,
+      "fields": {
+          "title": "Candyland",
+          "game_type": 1,
+          
+          "gamer": 1,
+          "description": "Move your pieces according to color cards"
+      }
+  }
+]
+
+//"number_of_players": 4,
