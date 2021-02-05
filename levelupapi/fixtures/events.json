@@ -1,0 +1,12 @@
+[
+  {
+      "model": "levelupapi.event",
+      "pk": 1,
+      "fields": {
+          "event_time": "2020-08-28T14:51:39.989Z",
+          "game": 1,
+          "gamer": 1,
+          "location": "Antioch"
+      }
+  }
+]
