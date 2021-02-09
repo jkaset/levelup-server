@@ -27,6 +27,7 @@ class Games(ViewSet):
         # body of the request from the client.
         game = Game()
         game.title = request.data["title"]
+        game.number_of_players = request.data["number_of_players"]
         game.description = request.data["description"]
         game.skill_level = request.data["skillLevel"]
         game.gamer = gamer
@@ -88,7 +89,7 @@ class Games(ViewSet):
         game.title = request.data["title"]
         game.gamer = gamer
         game.description = request.data["description"]
-
+        game.number_of_players = request.data["number_of_players"]
         gametype = Game_Type.objects.get(pk=request.data["gameTypeId"])
         game.gametype = gametype
         game.save()
@@ -146,7 +147,7 @@ class GameSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Game
-        fields = ('id', 'title', 'game_type', 'gamer', 'description')
+        fields = ('id', 'title', 'game_type', 'number_of_players', 'gamer', 'description')
         depth = 1
 
 

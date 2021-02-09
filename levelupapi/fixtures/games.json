@@ -6,6 +6,7 @@
           "title": "Welcome To",
           "gamer": 1,
           "game_type": 1,
+          "number_of_players": 4,
           "description": "Move your pieces according to color cards"
       }
   },
@@ -16,6 +17,7 @@
           "title": "Settlers of Catan",
           "gamer": 1,
           "game_type": 1,
+          "number_of_players": 4,
           "description": "Move your pieces according to color cards"
       }
   },
@@ -26,6 +28,7 @@
           "title": "Dungeons & Dragons",
           "gamer": 1,
           "game_type": 2,
+          "number_of_players": 4,
           "description": "Move your pieces according to color cards"
       }
   },
@@ -36,6 +39,7 @@
             "title": "Candyland",
             "gamer": 1,
             "game_type": 1,
+            "number_of_players": 4,
             "description": "Move your pieces according to color cards"
         }
   }

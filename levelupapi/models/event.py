@@ -1,4 +1,4 @@
-from levelupapi.models import game
+
 from django.db import models
 
 
@@ -9,3 +9,4 @@ class Event(models.Model):
     gamer = models.ForeignKey("Gamer", on_delete=models.CASCADE)
     location = models.CharField(max_length=50)
     
+   
