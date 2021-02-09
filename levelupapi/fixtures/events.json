@@ -1,12 +1,42 @@
 [
   {
-      "model": "levelupapi.event",
-      "pk": 1,
-      "fields": {
-          "event_time": "2020-08-28T14:51:39.989Z",
-          "game": 1,
-          "gamer": 1,
-          "location": "Antioch"
-      }
+    "model": "levelupapi.event",
+    "pk": 1,
+    "fields": {
+      "event_time": "2020-08-28T14:51:39.989Z",
+      "game": 2,
+      "gamer": 1,
+      "location": "Shelbyville"
+    }
+  },
+  {
+    "model": "levelupapi.event",
+    "pk": 2,
+    "fields": {
+      "event_time": "2020-08-28T14:51:39.989Z",
+      "game": 1,
+      "gamer": 1,
+      "location": "Dallas"
+    }
+  },
+  {
+    "model": "levelupapi.event",
+    "pk": 3,
+    "fields": {
+      "event_time": "2020-08-28T14:51:39.989Z",
+      "game": 1,
+      "gamer": 1,
+      "location": "Nashville"
+    }
+  },
+  {
+    "model": "levelupapi.event",
+    "pk": 4,
+    "fields": {
+      "event_time": "2020-08-28T14:51:39.989Z",
+      "game": 1,
+      "gamer": 1,
+      "location": "Antioch"
+    }
   }
 ]
