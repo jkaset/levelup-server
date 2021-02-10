@@ -27,9 +27,9 @@ class Games(ViewSet):
         # body of the request from the client.
         game = Game()
         game.title = request.data["title"]
-        game.number_of_players = request.data["number_of_players"]
+        game.number_of_players = request.data["numberOfPlayers"]
         game.description = request.data["description"]
-        game.skill_level = request.data["skillLevel"]
+        
         game.gamer = gamer
 
         
@@ -38,7 +38,7 @@ class Games(ViewSet):
         # whose `id` is what the client passed as the
         # `gameTypeId` in the body of the request.
         gametype = Game_Type.objects.get(pk=request.data["gameTypeId"])
-        game.gametype = gametype
+        game.game_type = gametype
 
         # Try to save the new game to the database, then
         # serialize the game instance as JSON, and send the
