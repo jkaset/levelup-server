@@ -23,14 +23,13 @@ class Events(ViewSet):
         gamer = Gamer.objects.get(user=request.auth.user)
 
         event = Event()
-        event.event_time = request.data["time"]
+        event.event_time = request.data["event_time"]
         event.location = request.data["location"]
-        
+        event.gamer = gamer
 
         game = Game.objects.get(pk=request.data["gameId"])
         event.game = game
-        gamer = Gamer.objects.get(pk=request.data["gamerId"])
-        event.gamer = gamer
+        
 
         try:
             event.save()
