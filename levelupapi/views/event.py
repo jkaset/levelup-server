@@ -34,7 +34,7 @@ class Events(ViewSet):
         try:
             event.save()
             serializer = EventSerializer(event, context={'request': request})
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         except ValidationError as ex:
             return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -47,9 +47,9 @@ class Events(ViewSet):
         try:
             event = Event.objects.get(pk=pk)
             serializer = EventSerializer(event, context={'request': request})
-            return Response(serializer.data)
-        except Exception:
-            return HttpResponseServerError(ex)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Event.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
     def update(self, request, pk=None):
         """Handle PUT requests for an event
@@ -58,7 +58,7 @@ class Events(ViewSet):
             Response -- Empty body with 204 status code
         """
         event = Event()
-        event.event_time = request.data["time"]
+        event.event_time = request.data["event_time"]
         event.location = request.data["location"]
         
 
@@ -117,7 +117,7 @@ class Events(ViewSet):
 
         serializer = EventSerializer(
             events, many=True, context={'request': request})
-        return Response(serializer.data)    
+        return Response(serializer.data, status=status.status.HTTP_200_OK)   
   
 
     @action(methods=['post', 'delete'], detail=True)
@@ -196,7 +196,7 @@ class EventGamerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Gamer
-        fields = ['user']
+        fields = ['user', 'id']
 
 class EventSerializer(serializers.ModelSerializer):
     """JSON serializer for events"""
