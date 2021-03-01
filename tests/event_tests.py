@@ -1,10 +1,10 @@
 import json
 from rest_framework import status
 from rest_framework.test import APITestCase
-from levelupapi.models import Game_Type, Gamer, Game
+from levelupapi.models import Game_Type, Gamer, Game, Event
 
 
-class GameTests(APITestCase):
+class EventTests(APITestCase):
     def setUp(self):
         """
         Create a new account and create sample category
@@ -21,7 +21,7 @@ class GameTests(APITestCase):
             "bio": "Love those gamez!!"
         }
 
-        
+        #game, schedular, gametype
         # Initiate request and capture response
         response = self.client.post(url, data, format='json')
 
@@ -42,18 +42,28 @@ class GameTests(APITestCase):
         gametype.save()
 
 
-    def test_create_game(self):
+        game = Game()
+        game.game_type_id = 1
+        game.title = "Sorry"
+        game.gamer_id = 1
+        game.number_of_players = 4
+        game.description = "fun"
+        game.save()
+        
+
+    def test_create_event(self):
         """
         Ensure we can create a new game.
         """
         # DEFINE GAME PROPERTIES
-        url = "/games"
+        url = "/events"
         data = {
-            "title": "Clue",
-            "gameTypeId": 1,
-            "numberOfPlayers": 6,
-            "description": "fun"
+            "event_time": "2020-08-28T14:51:39.989Z",
+            "gameId": 1,
+            "gamerId": 1,
+            "location": "Shelbyville"
         }
+
 
         # Make sure request is authenticated
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
@@ -68,30 +78,31 @@ class GameTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         # Assert that the properties on the created resource are correct
-        self.assertEqual(json_response["title"], "Clue")
-        self.assertEqual(json_response["description"], "fun")
-        self.assertEqual(json_response["number_of_players"], 6)
+        self.assertEqual(json_response["event_time"], "2020-08-28T14:51:39.989Z")
+        # self.assertEqual(json_response["game"]["id"], 2)
+        # self.assertEqual(json_response["gamer"]["id"], 2)
+        # self.assertEqual(json_response["game_type"]["id"], 1)
+        self.assertEqual(json_response["location"], "Shelbyville")
 
-    def test_get_game(self):
+      
+
+    def test_get_event(self):
         """
         Ensure we can get an existing game.
         """
 
         # Seed the database with a game
-        game = Game()
-        game.game_type_id = 1
-        game.title = "Monopoly"
-        game.gamer_id = 1
-        game.number_of_players = 4
-        game.description = "fun"
-
-        game.save()
-
+        event = Event()
+        event.event_time = "2020-08-28T14:51:39.989Z"
+        event.location = "Shelbyville"
+        event.game_id = 1
+        event.gamer_id = 1
+        event.save()
         # Make sure request is authenticated
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
 
         # Initiate request and store response
-        response = self.client.get(f"/games/{game.id}")
+        response = self.client.get(f"/events/{event.id}")
 
         # Parse the JSON in the response body
         json_response = json.loads(response.content)
@@ -100,60 +111,63 @@ class GameTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # Assert that the values are correct
-        self.assertEqual(json_response["title"], "Monopoly")
-        self.assertEqual(json_response["number_of_players"], 4)
-        self.assertEqual(json_response["description"], "fun")
+        # self.assertEqual(json_response["event_time"], "2020-08-28T14:51:39.989Z")
+        self.assertEqual(json_response["game"]["id"], 1)
+        self.assertEqual(json_response["gamer"]["id"], 1)
+        self.assertEqual(json_response["location"], "Shelbyville")
 
-    def test_change_game(self):
+    def test_change_event(self):
         """
         Ensure we can get an existing game.
         """
 
         # Seed the database with a game
-        game = Game()
-        game.game_type_id = 1
-        game.title = "Sorry"
-        game.gamer_id = 1
-        game.number_of_players = 4
-        game.description = "fun"
-        game.save()
+        event = Event()
+        event.event_time = "2020-08-28T14:51:39.989Z"
+        event.location = "Shelbyville"
+        event.game_id = 1
+        event.gamer_id = 1
+        event.save()
 
         data = {
-          "gameTypeId": 1,
-          "title": "Sorry",
-          "number_of_players": 4,
-          "description": "fun"
+            "event_time": "2020-08-28T14:51:39.989Z",
+            "gameId": 1,
+            "gamerId": 1,
+            "location": "Shelbyville"
         }
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
-        response = self.client.put(f"/games/{game.id}", data, format="json")
+        response = self.client.put(f"/events/{event.id}", data, format="json")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         # GET GAME AGAIN TO VERIFY CHANGES
-        response = self.client.get(f"/games/{game.id}")
+        response = self.client.get(f"/events/{event.id}")
         json_response = json.loads(response.content)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # Assert that the properties are correct
-        self.assertEqual(json_response["title"], "Sorry")
-        self.assertEqual(json_response["number_of_players"], 4)
-        self.assertEqual(json_response["description"], "fun")
+        self.assertEqual(json_response["event_time"], "2020-08-28T14:51:39.989Z")
+        self.assertEqual(json_response["game"]["id"], 1)
+        self.assertEqual(json_response["gamer"]["id"], 1)
+        self.assertEqual(json_response["location"], "Shelbyville")
 
-    def test_delete_game(self):
+
+    def test_delete_event(self):
         """
         Ensure we can delete an existing game.
         """
-        game = Game()
-        game.game_type_id = 1
-        game.title = "Sorry"
-        game.gamer_id = 1
-        game.number_of_players = 4
-        game.description = "fun"
-        game.save()
+        event = Event()
+        event.event_time = "2020-08-28T14:51:39.989Z"
+        event.location = "Shelbyville"
+        event.game_id = 1
+        event.gamer_id = 1
+        event.save()
 
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
-        response = self.client.delete(f"/games/{game.id}")
+        response = self.client.delete(f"/events/{event.id}")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-        # GET GAME AGAIN TO VERIFY 404 response
-        response = self.client.get(f"/games/{game.id}")
+        # GET event AGAIN TO VERIFY 404 response
+        response = self.client.get(f"/events/{event.id}")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+        
